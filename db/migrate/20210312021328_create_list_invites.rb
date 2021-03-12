@@ -1,10 +1,10 @@
 class CreateListInvites < ActiveRecord::Migration[6.1]
   def change
     create_table :list_invites do |t|
-      t.references :list, null: false
-      t.references :sender, null: false
-      t.references :pending_contributor, null: false
-      t.boolean :accepted, default: false
+      t.references :requestor
+      t.references :pending_contributor
+      t.references :list
+      t.boolean :accepted
 
       t.timestamps
     end
