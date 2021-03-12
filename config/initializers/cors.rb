@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'localhost:3000'
-    resource('/lists/*', headers: :any, methods: [:get, :patch, :put, :delete, :post, :options])
+    origins '*'
+    resource('*', headers: :any, methods: :any)
     end
 end
