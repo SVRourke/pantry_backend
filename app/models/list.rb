@@ -1,6 +1,8 @@
+  # TODO: FIX list_invites reference
+
 class List < ApplicationRecord
     has_many :contributions
-    has_many :contributors, through: :contributions, source :user
+    has_many :contributors, through: :contributions, source: :user
 
     has_many :items
 
