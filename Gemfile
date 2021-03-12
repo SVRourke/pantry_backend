@@ -28,6 +28,7 @@ gem 'rack-cors'
 # adding devise for auth
 gem 'devise'
 gem 'devise-jwt'
+gem 'dotenv-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
