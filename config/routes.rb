@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :list_invites
   resources :items
   resources :contributions
   resources :lists
