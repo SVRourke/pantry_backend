@@ -53,15 +53,15 @@ ActiveRecord::Schema.define(version: 2021_03_12_021328) do
   end
 
   create_table "list_invites", force: :cascade do |t|
-    t.integer "list_id", null: false
-    t.integer "sender_id", null: false
-    t.integer "pending_contributor_id", null: false
-    t.boolean "accepted", default: false
+    t.integer "requestor_id"
+    t.integer "pending_contributor_id"
+    t.integer "list_id"
+    t.boolean "accepted"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["list_id"], name: "index_list_invites_on_list_id"
     t.index ["pending_contributor_id"], name: "index_list_invites_on_pending_contributor_id"
-    t.index ["sender_id"], name: "index_list_invites_on_sender_id"
+    t.index ["requestor_id"], name: "index_list_invites_on_requestor_id"
   end
 
   create_table "lists", force: :cascade do |t|
