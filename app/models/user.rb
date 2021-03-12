@@ -12,8 +12,8 @@ class User < ApplicationRecord
     # users requesting friendship
     has_many :requestors, through: :requests
 
-    # recieved list invites
-    has_many :list_invites, foreign_key: :pending_contributor_id, class_name: 'Listinvite'
+    # recieved list_invites
+    has_many :list_invites, foreign_key: :pending_contributor_id, class_name: 'ListInvite'
 
     has_many :contributions
     has_many :lists, through: :contributions, source: :list 
