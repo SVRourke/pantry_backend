@@ -7,5 +7,5 @@ class List < ApplicationRecord
     has_many :items
 
     has_many :list_invites
-    has_many :invited_contributors, through: :list_invites, source: :pending_contributor 
+    has_many :invited_users, through: :list_invites, source: :pending_contributor 
 end
