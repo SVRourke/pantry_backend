@@ -13,4 +13,4 @@ User.first.friends.push(User.last)
 
 List.create(name: "Test List")
 
-List.contributors.push(User.first)
+List.first.contributors.push(User.first)
