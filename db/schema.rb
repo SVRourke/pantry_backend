@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_021328) do
+ActiveRecord::Schema.define(version: 2021_03_12_191058) do
 
   create_table "contributions", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -72,8 +72,13 @@ ActiveRecord::Schema.define(version: 2021_03_12_021328) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
+    t.string "jti", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti", unique: true
   end
 
   add_foreign_key "friendships", "users"
