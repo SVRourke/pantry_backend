@@ -2,8 +2,11 @@ class ApplicationController < ActionController::API
     before_action :authorized 
 
     def encode_token(payload)
-        # TODO: CHANGE TO AN ENV REF IMMEDIATELY
-        JWT.encode(payload, ENV['JWT_SECRET'])
+        JWT.encode(
+            payload.merge({exp: 30.minutes.from_now.to_i}), 
+            ENV['JWT_SECRET'], 
+            'HS256'
+        )
     end
 
     def auth_header
@@ -15,12 +18,9 @@ class ApplicationController < ActionController::API
             token = auth_header.split(' ')[1]
 
             begin
-                # TODO: CHANGE TO AN ENV REF IMMEDIATELY
-                JWT.decode(token, ENV['JWT_SECRET'])[0]
-
-            rescue JWT::DecodeError
+                JWT.decode(token, ENV['JWT_SECRET'], 'HS256')[0]
+            rescue JWT::DecodeError, JWT::ExpiredError
                 nil
-
             end
         end
     end
