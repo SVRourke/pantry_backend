@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
 
     def encode_token(payload)
         JWT.encode(
-            payload.merge({exp: 30.minutes.from_now.to_i}), 
+            payload.merge({exp: 30.days.from_now.to_i}), 
             ENV['JWT_SECRET'], 
             'HS256'
         )
