@@ -1,23 +1,16 @@
 Rails.application.routes.draw do
-  get 'private/test'
-  devise_for :users, path: '', path_names: {
-    sign_in: 'login',
-    sign_out: 'logout',
-    registration: 'signup'
-  },
-  controllers: {
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
-  }
-
-  resource :lists
   # resources :list_invites
+
   # resources :items
   # resources :contributions
   # resources :lists
   # resources :friendrequests
   # resources :friendships
   # resources :users
+  resources :users, only: [:create, :show]
+  post '/login', to: 'auth#create'
+  delete '/logout', to: 'auth#destroy'
+  get '/user_info', to: 'users#profile'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
 
@@ -30,3 +23,5 @@ Rails.application.routes.draw do
 #  authenticated do
 #  end
 end
+
+# TODO: MOVE SIGN UP ACTION TO REGISTRATIONS CONTROLLER
