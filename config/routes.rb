@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :users, only: [:create, :show]
   post '/login', to: 'auth#create'
   delete '/logout', to: 'auth#destroy'
+  get '/user_info', to: 'users#profile'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
 
