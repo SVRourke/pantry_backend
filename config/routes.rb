@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  resource :lists
   # resources :list_invites
   # resources :items
   # resources :contributions
@@ -18,4 +19,14 @@ Rails.application.routes.draw do
   # resources :friendships
   # resources :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+
+
+  # Create Authenticated and unauthenticated routes
+#   unauthenticated do
+#     root :to => 'home#index'
+#  end
+
+#  authenticated do
+#  end
 end

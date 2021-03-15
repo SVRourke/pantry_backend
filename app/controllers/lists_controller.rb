@@ -1,6 +1,7 @@
 class ListsController < ApplicationController
+    before_action :authenticate_user
     # TODO: Index
-    def index
+    def show
         list = List.all
         render json: list, include: [:contributors, :items]
     end
