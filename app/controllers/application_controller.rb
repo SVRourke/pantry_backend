@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
 
     def encode_token(payload)
         # TODO: CHANGE TO AN ENV REF IMMEDIATELY
-        JWT.encode(payload, 'MYSECRET')
+        JWT.encode(payload, ENV['JWT_SECRET'])
     end
 
     def auth_header
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::API
 
             begin
                 # TODO: CHANGE TO AN ENV REF IMMEDIATELY
-                JWT.decode(token, 'MYSECRET')[0]
+                JWT.decode(token, ENV['JWT_SECRET'])[0]
 
             rescue JWT::DecodeError
                 nil
