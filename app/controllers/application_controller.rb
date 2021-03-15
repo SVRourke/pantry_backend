@@ -43,3 +43,6 @@ class ApplicationController < ActionController::API
         status: :unauthorized unless logged_in?
     end
 end
+
+
+# TODO: ADD Denylist or other revocation scheme (non essential currently)
