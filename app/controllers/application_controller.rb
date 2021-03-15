@@ -10,15 +10,17 @@ class ApplicationController < ActionController::API
         request.headers['Authorization']
     end
 
-    def decoded_token(token)
+    def decoded_token
         if auth_header
             token = auth_header.split(' ')[1]
 
             begin
                 # TODO: CHANGE TO AN ENV REF IMMEDIATELY
                 JWT.decode(token, 'MYSECRET')[0]
+
             rescue JWT::DecodeError
                 nil
+
             end
         end
     end
@@ -35,10 +37,9 @@ class ApplicationController < ActionController::API
     end
 
     def authorized
-        render json: {
-            message: {
-                'Please Log In'
-            }, 
-            status: :unauthorized unless logged_in?
-        }
+        render json: { 
+            message: 'Please log in' 
+        }, 
+        status: :unauthorized unless logged_in?
+    end
 end
