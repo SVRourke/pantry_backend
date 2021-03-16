@@ -44,6 +44,21 @@ class ListsController < ApplicationController
         end
     end
 
+    # DELETE /lists/:list_id/leave
+    def leave
+        list = List.find(params[:list_id])
+
+        if current_user.leave_list(list)
+            render json: {
+                message: "Left #{list.name}"
+            }, status: :accepted
+        else
+            render json: {
+                message: "Error..."
+            }, status: :unprocessable_entity
+        end
+    end
+
     private
 
     def new_list_params

@@ -9,13 +9,14 @@ Rails.application.routes.draw do
     resources :lists, only: [:create, :show, :index, :destroy]
     resources :list_invites, only: [:index]
   end
-    
+  
   resources :lists, only: [] do
     resources :list_invites, only: [:create, :update, :destroy] 
     resources :items, only: [:index, :show, :create, :destroy] do
       put :update
       patch :acquire
     end
+    delete '/leave', to: "lists#leave"
   end  
 
   post '/search', to: 'users#search'

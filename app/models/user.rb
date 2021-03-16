@@ -21,5 +21,17 @@ class User < ApplicationRecord
     has_many :contributions
     has_many :lists, through: :contributions, source: :list 
 
+    def leave_list(list)
+        contribution = Contribution.find_by(user: self, list: list)
+        contribution.destroy
+    end
 
+    def unfriend(user)
+        record = self.friendships.find_by(friend: user)
+        if record
+            record.destroy
+        else
+            return nil
+        end
+    end
 end
