@@ -31,7 +31,18 @@ class ItemsController < ApplicationController
         end
     end
     
-    # TODO: Mark Acquired
+    def acquire
+        item = Item.find(params[:item_id])
+        item.update(acquired: true)
+        
+        if item.save
+            render json: { messages: "Updated item"}, status: :accepted
+        else
+            render json: {
+                message: "error..."
+            }
+        end
+    end
 
     private
     
