@@ -19,9 +19,16 @@ class ItemsController < ApplicationController
             }, status: :unprocessable_entity
         end
     end
-    # TODO: Read    GET    /lists/:list_id/items/:id(.:format)          items#show
-    # TODO: Update  PATCH  /lists/:list_id/items/:id(.:format)          items#update
-    # TODO: Delete  DELETE /lists/:list_id/items/:id(.:format)          items#destroy
+
+    def update
+        item = Item.find(params[:item_id])
+        if item.update(item_params)
+            render json: {item: item, msg: "Updated #{item.updated_at}"} 
+        else
+            render json: {message: "could not complete request"}
+        end
+    end
+
     def destroy
         if List.find(params[:list_id]).contributors.include?(current_user)
             Item.find(params[:id]).destroy
