@@ -8,6 +8,9 @@ class ListsController < ApplicationController
     # TODO: Create
     def create
         puts new_list_params
+        # current_user.lists.create(name: new_list_params)
+        # if good return good, else return error
+    end
 
     end
     # TODO: Read
