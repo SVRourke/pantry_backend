@@ -1,4 +1,14 @@
 class FriendrequestsController < ApplicationController
+    # /users/:user_id/friendrequests
+    def index
+        sent_requests = current_user.sent_requests
+        received_requests = current_user.requests
+        render json: {
+            sent: sent_requests,
+            received: received_requests
+        }
+    end
+
     # TODO: REFACTOR SIMPLIFY
     def create
         failMessage = {message: "Could not add user with email: #{params[:email]}"}
