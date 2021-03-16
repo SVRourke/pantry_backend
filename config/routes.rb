@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :users, only: [:create, :show, :index] do
     resources :friendrequests, only: [:create, :update, :destroy] 
     resources :lists, only: [:create, :show, :index, :destroy]
+    resources :list_invites, only: [:index]
   end
     
   resources :lists, only: [] do
