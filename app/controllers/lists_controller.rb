@@ -4,6 +4,8 @@ class ListsController < ApplicationController
         render json: lists, include: [:contributors]
     end
 
+    # TODO: Read
+    
     def create
         list = current_user.lists.create(new_list_params)        
         
@@ -17,9 +19,18 @@ class ListsController < ApplicationController
             }
         end
     end
-
-    # TODO: Read
-    # TODO: Delete
+    
+    def destroy
+        list = List.find(params[:id])
+        if list && current_user.lists.include?(list)
+            list.destroy
+            render json: {message: "List Deleted"}
+        else
+            render json: {
+                message: "Error, are you sure that's your list?"
+            }
+        end
+    end
 
     private
 
