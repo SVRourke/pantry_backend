@@ -2,16 +2,20 @@ class FriendrequestsController < ApplicationController
     # TODO: REFACTOR SIMPLIFY
     def create
         failMessage = {message: "Could not add user with email: #{params[:email]}"}
-        pendingFriend = User.find_by(email: params[:email])
-        if pendingFriend
+        requestee = User.find_by(email: params[:email])
+        if requestee
             begin
-                current_user.pending_friends.push(pendingFriend)
-                render json: {message: "Request sent to #{pendingFriend.name}"}, status: :accepted
+                current_user.pending_friends.push(requestee)
+                render json: {
+                    message: "Request sent to #{requestee.name}"
+                }, status: :accepted
             rescue
                 render json: failMessage, status: :unprocessable_entity
             end
         else
-            render json: {message: "could not find user with email #{params[:email]}"}
+            render json: {
+                message: "could not find user with email #{params[:email]}"
+            }
         end
     end
 
@@ -24,12 +28,18 @@ class FriendrequestsController < ApplicationController
             case params[:type]
             when 'accept'
                 friend_request.accept
-                render json: {message: "friend request accepted"}
+                render json: {
+                    message: "friend request accepted"
+                }
             when 'decline'
                 friend_request.destroy
-                render json: {message: "friend request declined."}
+                render json: {
+                    message: "friend request declined."
+                }
             else
-                render json: {message: "Something broke, try again later..."}
+                render json: {
+                    message: "Something broke, try again later..."
+                }
             end
         end
     end
