@@ -1,14 +1,7 @@
 Rails.application.routes.draw do
-  # resources :list_invites
 
-  # resources :items
-  # resources :contributions
-  # resources :lists
-  # resources :friendrequests
-  # resources :friendships
-  # resources :users
   post '/login', to: 'auth#create'
-  delete '/logout', to: 'auth#destroy'
+  # delete '/logout', to: 'auth#destroy'
   
   resources :users, only: [:create, :show, :index] do
      resources :lists, only: [:create, :show, :index]  
