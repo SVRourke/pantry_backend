@@ -1,5 +1,5 @@
 class FriendrequestsController < ApplicationController
-    # TODO: Create
+    # TODO: REFACTOR SIMPLIFY
     def create
         failMessage = {message: "Could not add user with email: #{params[:email]}"}
         pendingFriend = User.find_by(email: params[:email])
