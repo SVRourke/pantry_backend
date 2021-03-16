@@ -1,7 +1,18 @@
 class ListInvitesController < ApplicationController
+    def index
+        if current_user.id == params[:user_id].to_i
+            invites = current_user.list_invites
+            render json: invites
+            
+        else
+            render json: {
+                message: params
+            }
+        end
+    end
+
     # TODO: Validation 
     def create
-        # /lists/:list_id/listinvites
         if !!User.find(params[:invited_user_id])
             
             invite = List.find(params[:list_id]).list_invites.create( 
@@ -20,8 +31,6 @@ class ListInvitesController < ApplicationController
         end
     end
 
-
-    # /lists/:list_id/list_invites/:id
     def update
         invite = ListInvite.find(params[:id])
         case params[:type]
