@@ -18,7 +18,7 @@ class AuthController < ApplicationController
 
     end
 
-    # DESTROY 'logout'
+    # TODO: ADD JWT Denylist
     def destroy
     end
 
