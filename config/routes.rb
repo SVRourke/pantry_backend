@@ -11,9 +11,13 @@ Rails.application.routes.draw do
   delete '/logout', to: 'auth#destroy'
   
   resources :users, only: [:create, :show, :index] do
-     resources :lists, only: [:create, :show, :index]   
-  end
-
+     resources :lists, only: [:create, :show, :index]  
+     resources :friendrequests, only: [:create] 
+    end
+    
+    resources :friendrequests, only: :accept do
+      patch 'accept'
+    end
   # resources :lists, only: [:destroy, :update] do
   #   resources :items, only: [:create, :show, :update, :destroy]
   # end
