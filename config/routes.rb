@@ -12,7 +12,10 @@ Rails.application.routes.draw do
     
   resources :lists, only: [] do
     resources :list_invites, only: [:create, :update, :destroy] 
-    resources :items, only: [:index, :show, :create, :update, :destroy]
+    resources :items, only: [:index, :show, :create, :destroy] do
+      put :update
+      patch :acquire
+    end
   end  
 
   post '/search', to: 'users#search'
