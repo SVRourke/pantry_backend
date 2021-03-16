@@ -22,6 +22,14 @@ class ItemsController < ApplicationController
     # TODO: Read    GET    /lists/:list_id/items/:id(.:format)          items#show
     # TODO: Update  PATCH  /lists/:list_id/items/:id(.:format)          items#update
     # TODO: Delete  DELETE /lists/:list_id/items/:id(.:format)          items#destroy
+    def destroy
+        if List.find(params[:list_id]).contributors.include?(current_user)
+            Item.find(params[:id]).destroy
+            render json: {message: "Deleted item"}, status: :accepted
+        else
+            render json: {message: "could not complete request"}
+        end
+    end
     
     # TODO: Mark Acquired
 
@@ -31,3 +39,10 @@ class ItemsController < ApplicationController
         params.require(:item).permit(:name, :amount)
     end
 end
+
+
+# list_item_update PUT    /lists/:list_id/items/:item_id/update(.:format)  items#update
+# list_item_acquire PATCH  /lists/:list_id/items/:item_id/acquire(.:format) items#acquire
+# list_items GET    /lists/:list_id/items(.:format)                  items#index
+#             POST   /lists/:list_id/items(.:format)                  items#create
+# list_item GET    /lists/:list_id/items/:id(.:format)              items#show
