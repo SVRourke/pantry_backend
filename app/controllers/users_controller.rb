@@ -1,6 +1,17 @@
 class UsersController < ApplicationController
     skip_before_action :authorized, only: [:create]
     
+    # TODO: create serializer for single user no associations
+    # MAYBE refactir out and just send friend requests via request create action
+    def search
+        user = User.find_by(email: params[:email])
+        if user
+            render json: user, status: :accepted
+        else
+            render json: {message: "could not find user with email #{params[:email]}"}
+        end
+    end
+
     # route to test auth
     def profile
         render json: {
