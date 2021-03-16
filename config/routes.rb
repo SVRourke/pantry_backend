@@ -5,12 +5,9 @@ Rails.application.routes.draw do
   
   resources :users, only: [:create, :show, :index] do
      resources :lists, only: [:create, :show, :index]  
-     resources :friendrequests, only: [:create] 
+     resources :friendrequests, only: [:create, :update] 
     end
     
-    resources :friendrequests, only: :accept do
-      patch 'accept'
-    end
   # resources :lists, only: [:destroy, :update] do
   #   resources :items, only: [:create, :show, :update, :destroy]
   # end
