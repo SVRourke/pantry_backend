@@ -1,18 +1,23 @@
 class ListsController < ApplicationController
-    # TODO: Index
     def index
-        list = List.all
-        render json: list, include: [:contributors, :items]
+        lists = current_user.lists
+        render json: lists, include: [:contributors]
     end
 
-    # TODO: Create
     def create
-        puts new_list_params
-        # current_user.lists.create(name: new_list_params)
-        # if good return good, else return error
+        list = current_user.lists.create(new_list_params)        
+        
+        if list
+            render json: {
+                message: "#{list.name} created #{list.created_at}"
+            }
+        else
+            render json: {
+                message: "Could not save list"
+            }
+        end
     end
 
-    end
     # TODO: Read
     # TODO: Delete
 
