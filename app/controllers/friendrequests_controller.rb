@@ -44,6 +44,18 @@ class FriendrequestsController < ApplicationController
         end
     end
 
-    # TODO: Delete
+    def destroy
+        req = Friendrequest.find(params[:id])
+        if current_user == req.requestor
+            req.destroy
+            render json: {
+                message: "Request Deleted!"
+            }
+        else
+            render json: {
+                message: "You may only delete your own requests!"
+            }
+        end
+    end
     
 end
