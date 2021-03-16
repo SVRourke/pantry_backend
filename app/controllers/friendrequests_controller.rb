@@ -15,19 +15,25 @@ class FriendrequestsController < ApplicationController
         end
     end
 
-    # TODO: Accept SWITCH TO UPDATE for better Syntax
-    def accept
-        friend_request = Friendrequest.find(params[:friendrequest_id])
-        
-        if friend_request 
-            friend_request.accept
-            render json: {message: "You're now friends with #{User.find(params[:requestor_id]).name}"}
-        else
-            render json: {message: "Something broke, try again later..."}
+    # * Accepts a parameter of type, either accept or decline to
+    # * determine proper action to take 
+    def update
+        friend_request = Friendrequest.find(params[:id])
+
+        if friend_request
+            case params[:type]
+            when 'accept'
+                friend_request.accept
+                render json: {message: "friend request accepted"}
+            when 'decline'
+                friend_request.destroy
+                render json: {message: "friend request declined."}
+            else
+                render json: {message: "Something broke, try again later..."}
+            end
         end
     end
-    # TODO: Decline
-    def decline
-    end
+
     # TODO: Delete
+    
 end
