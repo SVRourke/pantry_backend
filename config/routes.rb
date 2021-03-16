@@ -4,14 +4,14 @@ Rails.application.routes.draw do
   # delete '/logout', to: 'auth#destroy'
   
   resources :users, only: [:create, :show, :index] do
-     resources :lists, only: [:create, :show, :index, :destroy]  
-     resources :friendrequests, only: [:create, :update, :destroy] 
-    end
+    resources :friendrequests, only: [:create, :update, :destroy] 
+    resources :lists, only: [:create, :show, :index, :destroy]
+  end
     
-  # resources :lists, only: [:destroy, :update] do
-  #   resources :items, only: [:create, :show, :update, :destroy]
-  # end
-  
+  resources :lists, only: [] do
+    resources :list_invites, only: [:create, :update, :destroy] 
+  end  
+
   post '/search', to: 'users#search'
   get '/user_info', to: 'users#profile'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
