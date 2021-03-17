@@ -1,4 +1,5 @@
-  # TODO: FIX list_invites reference
+# TODO: add logic to delete list no contributors left
+# TODO: validates name:presence
 
 class List < ApplicationRecord
     has_many :contributions
@@ -8,4 +9,5 @@ class List < ApplicationRecord
 
     has_many :list_invites
     has_many :invited_users, through: :list_invites, source: :pending_contributor 
+
 end
