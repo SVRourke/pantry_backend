@@ -1,8 +1,7 @@
 # TODO: add logic to delete list no contributors left
-# TODO: validates name:presence
 
 class List < ApplicationRecord
-    has_many :contributions
+    has_many :contributions, foreign_key: :list_id
     has_many :contributors, through: :contributions, source: :user
 
     has_many :items
