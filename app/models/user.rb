@@ -30,10 +30,7 @@ class User < ApplicationRecord
 
     def unfriend(user)
         record = self.friendships.find_by(friend: user)
-        if record
-            record.destroy
-        else
-            return nil
+        record.destroy if record            
         end
     end
 end
