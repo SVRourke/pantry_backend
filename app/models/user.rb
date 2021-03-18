@@ -31,6 +31,5 @@ class User < ApplicationRecord
     def unfriend(user)
         record = self.friendships.find_by(friend: user)
         record.destroy if record            
-        end
     end
 end
