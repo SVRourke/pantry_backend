@@ -1,6 +1,3 @@
-# TODO: validates the invited user is not already a contributor
-# TODO: validates the invited user is not already invited
-
 class ListInvite < ApplicationRecord
   include ActiveModel::Validations
   validates_with ListInviteValidator
