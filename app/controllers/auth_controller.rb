@@ -1,6 +1,7 @@
+# TODO: GO OVER STATUSES
 class AuthController < ApplicationController
     skip_before_action :authorized, only: [:create]
-    # CREATE 'login'
+    
     def create
         user = User.find_by(email: login_params[:email])
         
@@ -9,13 +10,12 @@ class AuthController < ApplicationController
                 user: UserSerializer.new(user), 
                 jwt: encode_token(user_id: user.id) 
             }, 
-            status: :accepted
+            status: :created
         else
             render json: {
                 error: 'failed to login',
             }, status: :not_acceptable
         end
-
     end
 
     # TODO: ADD JWT Denylist
