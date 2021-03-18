@@ -2,6 +2,9 @@
 # TODO: validates the invited user is not already invited
 
 class ListInvite < ApplicationRecord
+  include ActiveModel::Validations
+  validates_with ListInviteValidator
+
   belongs_to :requestor, class_name: 'User'
   belongs_to :pending_contributor, class_name: 'User'
   belongs_to :list, class_name: 'List'
