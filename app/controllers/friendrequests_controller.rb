@@ -5,27 +5,30 @@ class FriendrequestsController < ApplicationController
         received_requests = current_user.requests
         render json: {
             sent: sent_requests,
-            received: received_requests
-        }
+            received: received_requests},
+            status: :ok
     end
 
-    # TODO: REFACTOR SIMPLIFY
     def create
-        failMessage = {message: "Could not add user with email: #{params[:email]}"}
         requestee = User.find_by(email: params[:email])
+
         if requestee
             begin
                 current_user.pending_friends.push(requestee)
                 render json: {
-                    message: "Request sent to #{requestee.name}"
-                }, status: :accepted
+                    message: "Request sent to #{requestee.name}"}, 
+                    status: :created
+
             rescue
-                render json: failMessage, status: :unprocessable_entity
+                render json: {
+                    message: "Could not add user with email: #{params[:email]}"}, 
+                    status: :unprocessable_entity
             end
+
         else
             render json: {
-                message: "could not find user with email #{params[:email]}"
-            }
+                message: "could not find user with email #{params[:email]}"},
+                status: :not_found
         end
     end
 
@@ -36,20 +39,23 @@ class FriendrequestsController < ApplicationController
 
         if friend_request
             case params[:type]
+            
             when 'accept'
                 friend_request.accept
                 render json: {
-                    message: "friend request accepted"
-                }
+                    message: "friend request accepted"},
+                    status: :ok
+            
             when 'decline'
                 friend_request.destroy
                 render json: {
-                    message: "friend request declined."
-                }
+                    message: "friend request declined."},
+                    status: :ok
+            
             else
                 render json: {
-                    message: "Something broke, try again later..."
-                }
+                    message: "Something broke, try again later..."},
+                    status: :unprocessable_entity
             end
         end
     end
@@ -59,12 +65,13 @@ class FriendrequestsController < ApplicationController
         if current_user == req.requestor
             req.destroy
             render json: {
-                message: "Request Deleted!"
-            }
+                message: "Request Deleted!"},
+                status: :gone
+
         else
             render json: {
-                message: "You may only delete your own requests!"
-            }
+                message: "You may only delete your own requests!"},
+                status: :unauthorized
         end
     end
     

@@ -1,17 +1,19 @@
+
 class ListInvitesController < ApplicationController
     def index
         if current_user.id == params[:user_id].to_i
             invites = current_user.list_invites
-            render json: invites
+            render json: 
+                invites,
+                status: :ok
             
         else
             render json: {
-                message: params
-            }
+                message: "Error..."},
+                status: :bad_request
         end
     end
 
-    # TODO: Validation 
     def create
         if !!User.find(params[:invited_user_id])
             
@@ -21,38 +23,36 @@ class ListInvitesController < ApplicationController
             )
 
             render json: {
-                message: "invitation sent"
-            }, status: 200
+                message: "invitation sent"},
+                status: :created
         
         else
             render json: {
-                message: "unable to complete request"
-            },status: :unprocessable_entity
+                message: "unable to complete request"},
+                status: :bad_request
         end
     end
 
     def update
         invite = ListInvite.find(params[:id])
+        
         case params[:type]
         when 'accept'
             invite.accept
             render json: {
-                message: "accepted invite"
-            },
-            status: :accepted
+                message: "accepted invite"},
+                status: :ok
             
         when 'decline'
             invite.destroy
             render json: {
-                message: "declined invite"
-            },
-            status: :accepted
+                message: "declined invite"},
+                status: :ok
 
         else
             render json: {
-                message: "unable to complete request"
-            }, 
-            status: :unprocessable_entity
+                message: "unable to complete request"}, 
+                status: :unprocessable_entity
         end
     end
     
@@ -64,13 +64,12 @@ class ListInvitesController < ApplicationController
         if current_user.lists.include?(list) && invite.requestor == current_user
             invite.destroy
             render json: {
-                message: "deleted invite"
-                }, 
-                status: :accepted
+                message: "deleted invite"}, 
+                status: :gone
         else
             render json: {
                 message: "could not complete request"}, 
-                status: :unprocessable_entity
+                status: :bad_request
         end
     end
 end

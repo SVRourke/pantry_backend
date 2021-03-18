@@ -1,40 +1,51 @@
 class ItemsController < ApplicationController
-    # TODO: INDEX   GET    /lists/:list_id/items(.:format)              items#index
     def index
         items = Item.where(list_id: params[:list_id])
-        render json: items
+        render json: 
+            items,
+            status: :ok
     end
-    # TODO: Create  POST   /lists/:list_id/items(.:format)              items#create
+
     def create
         item = List.find(params[:list_id]).items.build(item_params)
         item.user = current_user
         
         if item.save
             render json: {
-                message: "Saved Item"
-            }, status: :accepted
+                message: "Saved Item"}, 
+                status: :created
         else
             render json: {
-                message: "Error could not add #{item.name}"
-            }, status: :unprocessable_entity
+                message: "Error could not add #{item.name}"},
+                status: :unprocessable_entity
         end
     end
 
     def update
         item = Item.find(params[:item_id])
+        
         if item.update(item_params)
-            render json: {item: item, msg: "Updated #{item.updated_at}"} 
+            render json: {
+                item: item, 
+                msg: "Updated #{item.updated_at}"},
+                status: :ok 
         else
-            render json: {message: "could not complete request"}
+            render json: {
+                message: "could not complete request"},
+                status: :unprocessable_entity
         end
     end
 
     def destroy
         if List.find(params[:list_id]).contributors.include?(current_user)
             Item.find(params[:id]).destroy
-            render json: {message: "Deleted item"}, status: :accepted
+            render json: {
+                message: "Deleted item"},
+                status: :gone
         else
-            render json: {message: "could not complete request"}
+            render json: {
+                message: "could not complete request"},
+                status: :not_found
         end
     end
     
@@ -43,11 +54,13 @@ class ItemsController < ApplicationController
         item.update(acquired: true)
         
         if item.save
-            render json: { messages: "Updated item"}, status: :accepted
+            render json: {
+                messages: "Updated item"},
+                status: :ok
         else
             render json: {
-                message: "error..."
-            }
+                message: "error..."},
+                status: :unprocessable_entity
         end
     end
 

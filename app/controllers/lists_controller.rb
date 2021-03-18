@@ -1,18 +1,22 @@
+# TODO: add serializers
 class ListsController < ApplicationController
     def index
         lists = current_user.lists
-        render json: lists, include: [:contributors]
+        render json: lists, 
+            include: [:contributors],
+            status: :ok
     end
 
-    # TODO: create listserializer
     def show
         list = List.find(params[:id])
+        
         if list && current_user.lists.include?(list)
-            render json: list, status: :accepted
+            render json: list, 
+            status: :ok
         else
             render json: {
                 message: "could not complete request"
-            }, status: :unprocessable_entity
+            }, status: :not_found
         end
     end
     
@@ -22,7 +26,7 @@ class ListsController < ApplicationController
         if list
             render json: {
                 message: "#{list.name} created #{list.created_at}"
-            }, status: :accepted
+            }, status: :created
         else
             render json: {
                 message: "Could not save list"
@@ -32,26 +36,26 @@ class ListsController < ApplicationController
     
     def destroy
         list = List.find(params[:id])
+        
         if list && current_user.lists.include?(list)
             list.destroy
             render json: {
                 message: "List Deleted"
-            }, status: :accepted
+            }, status: :gone
         else
             render json: {
                 message: "Error, are you sure that's your list?"
-            }, status: :unprocessable_entity
+            }, status: :bad_request
         end
     end
 
-    # DELETE /lists/:list_id/leave
     def leave
         list = List.find(params[:list_id])
 
         if current_user.leave_list(list)
             render json: {
                 message: "Left #{list.name}"
-            }, status: :accepted
+            }, status: :ok
         else
             render json: {
                 message: "Error..."

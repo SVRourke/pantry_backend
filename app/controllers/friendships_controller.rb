@@ -1,7 +1,10 @@
 class FriendshipsController < ApplicationController
     def index
         friends = current_user.friends
-        render json: friends, include: [:id, :name]
+        render json: 
+            friends, 
+            include: [:id, :name],
+            status: :ok
     end
 
     def destroy
@@ -9,12 +12,12 @@ class FriendshipsController < ApplicationController
         if friend
             current_user.unfriend(friend)
             render json: {
-                message: "Unfriended #{friend.name}"
-            }, status: 200
+                message: "Unfriended #{friend.name}"},
+                status: :ok
         else
             render json: {
-                message: "unable to complete request"
-            }, status: :unprocessable_entity
+                message: "unable to complete request"}, 
+                status: :not_found
         end
     end
 end
