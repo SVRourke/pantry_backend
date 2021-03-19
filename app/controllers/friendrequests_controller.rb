@@ -3,12 +3,14 @@ class FriendrequestsController < ApplicationController
     def index
         sent_requests = current_user.sent_requests
         received_requests = current_user.requests
+
         render json: {
             sent: sent_requests,
             received: received_requests},
             status: :ok
     end
-
+    
+    # ALERT: Investigate what the rescue is for and make error message
     def create
         requestee = User.find_by(email: params[:email])
 
@@ -20,20 +22,14 @@ class FriendrequestsController < ApplicationController
                     status: :created
 
             rescue
-                render json: {
-                    message: "Could not add user with email: #{params[:email]}"}, 
-                    status: :unprocessable_entity
+                something_broke()
             end
 
         else
-            render json: {
-                message: "could not find user with email #{params[:email]}"},
-                status: :not_found
+            not_found()
         end
     end
 
-    # * Accepts a parameter of type, either accept or decline to
-    # * determine proper action to take 
     def update
         friend_request = Friendrequest.find(params[:id])
 
@@ -42,20 +38,14 @@ class FriendrequestsController < ApplicationController
             
             when 'accept'
                 friend_request.accept
-                render json: {
-                    message: "friend request accepted"},
-                    status: :ok
+                request_accepted()
             
             when 'decline'
                 friend_request.destroy
-                render json: {
-                    message: "friend request declined."},
-                    status: :ok
+                request_declined()
             
             else
-                render json: {
-                    message: "Something broke, try again later..."},
-                    status: :unprocessable_entity
+                something_broke()
             end
         end
     end
@@ -64,14 +54,9 @@ class FriendrequestsController < ApplicationController
         req = Friendrequest.find(params[:id])
         if current_user == req.requestor
             req.destroy
-            render json: {
-                message: "Request Deleted!"},
-                status: :gone
-
+            successful_destroy()
         else
-            render json: {
-                message: "You may only delete your own requests!"},
-                status: :unauthorized
+            unauthorized_message()
         end
     end
     

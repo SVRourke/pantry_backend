@@ -10,9 +10,7 @@ class AuthController < ApplicationController
                 jwt: encode_token(user_id: user.id)}, 
                 status: :created
         else
-            render json: {
-                error: 'failed to login'}, 
-                status: :not_acceptable
+            unauthorized_message()
         end
     end
 

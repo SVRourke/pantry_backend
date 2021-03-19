@@ -3,14 +3,13 @@ class ListInvitesController < ApplicationController
     def index
         if current_user.id == params[:user_id].to_i
             invites = current_user.list_invites
+            
             render json: 
                 invites,
                 status: :ok
             
         else
-            render json: {
-                message: "Error..."},
-                status: :bad_request
+            not_authorized()
         end
     end
 
@@ -27,9 +26,7 @@ class ListInvitesController < ApplicationController
                 status: :created
         
         else
-            render json: {
-                message: "unable to complete request"},
-                status: :bad_request
+            not_found()
         end
     end
 
@@ -39,24 +36,17 @@ class ListInvitesController < ApplicationController
         case params[:type]
         when 'accept'
             invite.accept
-            render json: {
-                message: "accepted invite"},
-                status: :ok
+            request_accepted()
             
         when 'decline'
             invite.destroy
-            render json: {
-                message: "declined invite"},
-                status: :ok
+            request_declined()
 
         else
-            render json: {
-                message: "unable to complete request"}, 
-                status: :unprocessable_entity
-        end
+            something_broke()
     end
     
-    # TODO: add coverage for edge cases
+    # ALERT: REDO
     def destroy
         list = List.find(params[:list_id])
         invite = ListInvite.find(params[:id])
