@@ -6,7 +6,7 @@ class UsersController < ApplicationController
         @user = User.create(user_params)
         if @user.valid?
             render json: { 
-                user: UserSerializer.new(@user), 
+                user: BulkUserInfoSerializer.new(@user), 
                 jwt: encode_token(user_id: @user.id) 
             }, 
             status: :created
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
         if user.valid?
             render json: { 
-                user: UserSerializer.new(user) 
+                user: BulkUserInfoSerializer.new(user) 
             }, 
             status: :ok
         else
