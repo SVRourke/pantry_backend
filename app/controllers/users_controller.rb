@@ -18,13 +18,12 @@ class UsersController < ApplicationController
     def show
         user = User.find(params[:id])
           
-        if user == current_user
+        if user && user == current_user
             render json: { 
                 user: BulkUserInfoSerializer.new(user)}, 
                 status: :ok
             return
         end
-
         unauthorized_message()
     end
     
