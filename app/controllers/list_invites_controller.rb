@@ -9,7 +9,7 @@ class ListInvitesController < ApplicationController
                 status: :ok
             
         else
-            not_authorized()
+            unauthorized_message()
         end
     end
 
@@ -44,6 +44,7 @@ class ListInvitesController < ApplicationController
 
         else
             something_broke()
+        end
     end
     
     # ALERT: REDO
