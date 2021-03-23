@@ -4,7 +4,8 @@ class ListsController < ApplicationController
         lists = current_user.lists
         render json: 
             lists, 
-            each_serializer: ListIndexSerializer
+            each_serializer: ListIndexSerializer,
+            status: :ok
     end
 
     def show
