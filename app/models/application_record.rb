@@ -9,7 +9,7 @@ class ApplicationRecord < ActiveRecord::Base
       when -Float::INFINITY...1
         "1 minute"
       when 1...59
-        "#{mintues.truncate()} minutes"
+        "#{minutes.truncate()} minutes"
       when 60...105
         "1 hour"
       when 105...1000
