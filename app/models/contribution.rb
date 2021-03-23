@@ -10,4 +10,8 @@ class Contribution < ApplicationRecord
   def check_if_last
     self.list.destroy if !self.list.contributors.any?
   end
+
+  def item_count
+    self.list.items.where(user_id: self.user_id).count
+  end
 end
