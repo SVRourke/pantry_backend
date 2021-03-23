@@ -2,9 +2,9 @@
 class ListsController < ApplicationController
     def index
         lists = current_user.lists
-        render json: lists, 
-            include: [:contributors],
-            status: :ok
+        render json: 
+            lists, 
+            each_serializer: ListIndexSerializer
     end
 
     def show
