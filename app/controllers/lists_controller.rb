@@ -10,8 +10,7 @@ class ListsController < ApplicationController
 
     def show
         list = List.find(params[:id])
-        
-        if list && current_user.lists.include?(list)
+        if current_user.lists.include?(list)
             render json: list, 
             status: :ok
         else
@@ -27,13 +26,11 @@ class ListsController < ApplicationController
     def destroy
         list = List.find(params[:id])
 
-        if list && current_user.lists.include?(list)
+        if current_user.lists.include?(list)
             list.destroy
             successful_destroy()
-        
         else
             unauthorized_message()
-        
         end
     end
 
