@@ -1,7 +1,9 @@
 class FriendshipsController < ApplicationController
     def index
         friends = current_user.friends
-        render json: friends, status: :ok
+        render json: friends,
+            each_serializer: FriendsSerializer,
+            status: :ok
     end
 
     def destroy
