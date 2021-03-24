@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
     # recieved list_invites
     has_many :list_invites, foreign_key: :pending_contributor_id, class_name: 'ListInvite'
+    has_many :sent_list_invites, foreign_key: :requestor_id, class_name: 'ListInvite'
 
     has_many :contributions
     has_many :lists, through: :contributions, source: :list 
@@ -33,5 +34,13 @@ class User < ApplicationRecord
     def unfriend(user)
         record = self.friendships.find_by(friend: user)
         record.destroy if record            
+    end
+
+    def all_list_invites
+        return ListInvite.where(requestor_id: self.id).or(ListInvite.where(pending_contributor_id: self.id))
+    end
+
+    def all_requests
+        return Friendrequest.where(requestor_id: self.id).or(Friendrequest.where(pending_friend_id: self.id))
     end
 end
