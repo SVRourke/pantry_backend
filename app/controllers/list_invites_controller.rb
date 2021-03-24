@@ -1,29 +1,30 @@
 
 class ListInvitesController < ApplicationController
     def index
-        if current_user.id == params[:user_id].to_i
-            invites = current_user.list_invites
-            
+        invites = current_user.all_list_invites            
             render json: 
                 invites,
                 status: :ok
-            
-        else
-            unauthorized_message()
-        end
     end
 
     def create
-        if !!User.find(params[:invited_user_id])
-            
-            invite = List.find(params[:list_id]).list_invites.create( 
-                requestor: current_user, 
-                pending_contributor: User.find(params[:invited_user_id])
-            )
+        if !!User.find_by_email(params[:email])
 
-            render json: {
-                message: "invitation sent"},
-                status: :created
+            list = List.find(params[:list_id])
+            user = User.find_by_email(params[:email])
+            
+            invite = list.list_invites.create( 
+                requestor: current_user, 
+                pending_contributor: user
+            )
+            if invite.valid?
+                render json: {
+                    list_invite: invite},
+                    status: :created
+            else
+                model_errors(invite.errors.messages)
+            end
+
         
         else
             not_found()
