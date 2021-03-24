@@ -1,12 +1,10 @@
 class FriendrequestsController < ApplicationController
     # /users/:user_id/friendrequests
     def index
-        sent_requests = current_user.sent_requests
-        received_requests = current_user.requests
+        requests = current_user.all_requests
 
-        render json: {
-            sent: sent_requests,
-            received: received_requests},
+        render json:
+            requests,
             status: :ok
     end
     
