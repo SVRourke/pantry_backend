@@ -1,14 +1,17 @@
 class FriendRequestSerializer < ActiveModel::Serializer
-  attributes :id, :user, :since
+  attributes :id, :requestor_id, :requestor_name, :requestee_name, :type, :record_age
 
 
-  def user
-    User.find(object.requestor_id).name
+  def requestor_name
+    object.requestor.name
   end
 
-  # TODO: PRETTIFY DATE
-  def since
-    object.created_at
+  def requestee_name
+    object.pending_friend.name
+  end
+
+  def type
+    object.requestor == current_user ? "sent" : "received";
   end
 
 end
