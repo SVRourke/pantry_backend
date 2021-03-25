@@ -5,6 +5,7 @@ class FriendrequestsController < ApplicationController
 
         render json:
             requests,
+            each_serializer: FriendRequestSerializer,
             status: :ok
     end
     
