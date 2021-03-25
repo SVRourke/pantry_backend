@@ -1,19 +1,23 @@
 class BulkUserInfoSerializer < ActiveModel::Serializer
-  attributes :id, :email, :name
-  # attribute: :friend_requests, each_serializer: :FriendRequestSerializer
-  attribute: list_requests: {each_serializer: MinimalSerializer}
+  attributes :id, :email, :name, :lists, :friend_requests, :list_requests
 
   def friend_requests
-    ActiveModel::Serializer::CollectionSerializer.new(object.all_requests.to_a, {each_serializer: FriendRequestSerializer})
+    object.all_requests.map do |fr|
+      FriendRequestSerializer.new(fr)
+    end
   end
     
   def list_requests
-    object.all_list_invites
+    object.all_list_invites.map do |lr|
+      ListInviteSerializer.new(lr)
+    end
+  end
+
+  def lists
+    object.lists.map do |l|
+      ListSerializer.new(l)
+    end
   end
   
   has_many :friendships, key: :friends, serializer: FriendsSerializer
-  # has_many :pending_friends, serializer: MinimalSerializer
-  # has_many :requests, key: :friend_requests, serializer: FriendRequestSerializer
-  # has_many :list_invites
-  has_many :lists, serializer: MinimalSerializer
 end
