@@ -14,7 +14,7 @@ class ListInviteSerializer < ActiveModel::Serializer
   end
 
   def type
-    object.requestor == current_user ? "sent" : "received";
+    object.requestor == scope ? "sent" : "received";
   end
 
 end
