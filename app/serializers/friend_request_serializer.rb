@@ -1,5 +1,10 @@
 class FriendRequestSerializer < ActiveModel::Serializer
-  attributes :id, :requestor_id, :requestor_name, :requestee_name, :type, :record_age
+  attributes :id, 
+             :requestor_id, 
+             :requestor_name, 
+             :requestee_name, 
+             :type, 
+             :record_age
 
 
   def requestor_name
@@ -11,7 +16,7 @@ class FriendRequestSerializer < ActiveModel::Serializer
   end
 
   def type
-    object.requestor == current_user ? "sent" : "received";
+    object.requestor == scope ? "sent" : "received";
   end
 
 end
