@@ -1,6 +1,6 @@
 class FriendshipsController < ApplicationController
     def index
-        friends = current_user.friends
+        friends = current_user.friendships
         render json: friends,
             each_serializer: FriendsSerializer,
             status: :ok
