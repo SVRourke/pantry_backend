@@ -1,0 +1,2 @@
+class DeniedJti < ApplicationRecord
+end
