@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
         jti = Digest::MD5.hexdigest(jti_raw)
 
         JWT.encode(
-            payload.merge({exp: 30.minute.from_now.to_i, jti: jti}), 
+            payload.merge({exp: 30.days.from_now.to_i, jti: jti}), 
             ENV['JWT_SECRET'], 
             'HS256'
         )
@@ -106,6 +106,3 @@ class ApplicationController < ActionController::API
 
 
 end
-
-
-# TODO: ADD Denylist or other revocation scheme (non essential currently)
