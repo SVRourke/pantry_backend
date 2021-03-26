@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_021328) do
+ActiveRecord::Schema.define(version: 2021_03_26_133704) do
 
   create_table "contributions", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 2021_03_12_021328) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["list_id"], name: "index_contributions_on_list_id"
     t.index ["user_id"], name: "index_contributions_on_user_id"
+  end
+
+  create_table "denied_jtis", force: :cascade do |t|
+    t.string "jti"
+    t.datetime "expiration"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "friendrequests", force: :cascade do |t|
