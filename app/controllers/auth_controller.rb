@@ -14,8 +14,13 @@ class AuthController < ApplicationController
         end
     end
 
-    # TODO: ADD JWT Denylist
     def destroy
+        token = decoded_token()
+
+        if token
+            DeniedJti.create!(jti: token['jti'], expiration: token['exp'])
+            render json: {message: "logged  out"}, status: :gone
+        end
     end
 
     private
