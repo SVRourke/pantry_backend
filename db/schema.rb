@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_133704) do
 
   create_table "denied_jtis", force: :cascade do |t|
     t.string "jti"
-    t.datetime "expiration"
+    t.integer "expiration"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
