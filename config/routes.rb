@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   post '/login', to: 'auth#create'
-  # delete '/logout', to: 'auth#destroy'
+  delete '/logout', to: 'auth#destroy'
   
   resources :users, only: [:create, :show, :index] do
     resources :friendships, path: :friends, only: [:index, :destroy]
@@ -19,7 +19,6 @@ Rails.application.routes.draw do
     delete '/leave', to: "lists#leave"
   end  
 
-  post '/search', to: 'users#search'
   get '/user_info', to: 'users#profile'
 end
 
