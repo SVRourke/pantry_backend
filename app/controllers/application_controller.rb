@@ -5,8 +5,15 @@ class ApplicationController < ActionController::API
     rescue_from ActionController::ParameterMissing, with: :model_errors
 
     def encode_token(payload)
+        
+        jti_raw = [
+            ENV['JWT_SECRET'], 
+            Time.now.to_i].join(':').to_s
+        
+        jti = Digest::MD5.hexdigest(jti_raw)
+
         JWT.encode(
-            payload.merge({exp: 30.days.from_now.to_i}), 
+            payload.merge({exp: 30.minute.from_now.to_i, jti: jti}), 
             ENV['JWT_SECRET'], 
             'HS256'
         )
@@ -21,8 +28,9 @@ class ApplicationController < ActionController::API
             token = auth_header.split(' ')[1]
 
             begin
-                JWT.decode(token, ENV['JWT_SECRET'], 'HS256')[0]
-            rescue JWT::DecodeError, JWT::ExpiredError
+                token = JWT.decode(token, ENV['JWT_SECRET'], 'HS256').first
+                item = DeniedJti.find_by(jti: token['jti']) ? nil : token
+            rescue JWT::DecodeError, JWT::ExpiredSignature
                 nil
             end
         end
