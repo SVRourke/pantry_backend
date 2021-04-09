@@ -1,5 +1,9 @@
 class ListInviteSerializer < ActiveModel::Serializer
-  attributes :id, :record_age, :requestor_name, :requestee_name, :contributor_count, :type
+  attributes :id, :type, :list_name, :requestor_name, :requestee_name, :contributor_count, :record_age
+
+  def list_name
+    object.list.name
+  end
 
   def requestor_name
     object.requestor.name
