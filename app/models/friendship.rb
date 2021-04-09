@@ -10,6 +10,12 @@ class Friendship < ApplicationRecord
     after_create :reciprocate_friendship
     after_destroy :remove_reciprocal
 
+    def mutual_list_count
+        a = User.find(self.user_id)
+        b = User.find(self.friend_id)
+        self.user.lists.filter { |l| l.contributors.includes(self.friend)}.count
+      end
+
     private
 
         def reciprocate_friendship
