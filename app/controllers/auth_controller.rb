@@ -7,6 +7,7 @@ class AuthController < ApplicationController
 
         if user && user.authenticate(login_params[:password])
             render json: {  
+                id: user.id,
                 jwt: encode_token(user_id: user.id)}, 
                 status: :created
         else
