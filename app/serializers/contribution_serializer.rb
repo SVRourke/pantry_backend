@@ -4,4 +4,5 @@ class ContributionSerializer < ActiveModel::Serializer
   def username
     User.find(object.user_id).name
   end
+
 end
