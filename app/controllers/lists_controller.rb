@@ -3,8 +3,7 @@ class ListsController < ApplicationController
     def index
         lists = current_user.lists
         render json: 
-            lists, 
-            each_serializer: ListIndexSerializer,
+            lists,
             status: :ok
     end
 
