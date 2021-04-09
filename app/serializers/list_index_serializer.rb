@@ -1,5 +1,5 @@
 class ListIndexSerializer < ActiveModel::Serializer
-  attributes :id, :name, :contributor_count, :item_count
+  attributes :id, :name, :contributor_count, :item_count, :contributors
   
   def contributor_count
     object.contributors.count
