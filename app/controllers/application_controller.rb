@@ -1,45 +1,21 @@
 class ApplicationController < ActionController::API
-    before_action :authorized 
+    include ::ActionController::Cookies
+    # protect_from_forgery :exception
+    # before_action :set_csrf_cookie
+
+    # TODO: ADD BEFORE EVERY AUTHORIZED
+
+    def bake_cookies(id)
+        cookies.signed[:id] = {
+            value: id,
+            httponly: true,
+            expires: 10.minutes.from_now
+        }
+    end
     
-    rescue_from ActiveRecord::RecordNotFound, with: :not_found
-    rescue_from ActionController::ParameterMissing, with: :model_errors
-
-    def encode_token(payload)
-        
-        jti_raw = [
-            ENV['JWT_SECRET'], 
-            Time.now.to_i].join(':').to_s
-        
-        jti = Digest::MD5.hexdigest(jti_raw)
-
-        JWT.encode(
-            payload.merge({exp: 30.days.from_now.to_i, jti: jti}), 
-            ENV['JWT_SECRET'], 
-            'HS256'
-        )
-    end
-
-    def auth_header
-        request.headers['Authorization']
-    end
-
-    def decoded_token
-        if auth_header
-            token = auth_header.split(' ')[1]
-
-            begin
-                token = JWT.decode(token, ENV['JWT_SECRET'], 'HS256').first
-                item = DeniedJti.find_by(jti: token['jti']) ? nil : token
-            rescue JWT::DecodeError, JWT::ExpiredSignature
-                nil
-            end
-        end
-    end
-
     def current_user
-        if decoded_token
-            user_id = decoded_token['user_id']
-            @user = User.find_by(id: user_id)
+        if cookies.signed[:id]
+            @user = User.find_by(id: cookies.signed[:id])
         end
     end
 
@@ -104,6 +80,12 @@ class ApplicationController < ActionController::API
             id: record.id
         }, 
             status: :created
+    end
+
+    private
+    
+    def set_csrf_cookie
+        cookies["CSRF-TOKEN"] = form_authenticity_token
     end
 
 
