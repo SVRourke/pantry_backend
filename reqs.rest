@@ -1,0 +1,38 @@
+@USER_ID = 1 
+@JWT = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MjA1MDc0NjUsImp0aSI6IjljMTM0MzI1NGU2NGQ0MGI0YjIzZGMxMWI1MTUxZGIyIn0.s4ce07cTmB_nQhkFYpzlGY-leAJ6X2w0xtdAQAkBivU"
+
+### Login
+
+POST http://localhost:3000/login 
+content-type: application/json 
+
+{
+    "user": {
+        "email": "Sam@gmail.com",
+        "password": "password"
+    }
+}
+
+### Index Lists
+
+GET http://localhost:3000/users/{{USER_ID}}/lists
+content-type: application/json
+Authorization: {{JWT}}
+
+### Index List Invites
+
+GET http://localhost:3000/users/{{USER_ID}}/list_invites
+content-type: application/json
+Authorization: {{JWT}}
+
+### Index Friends
+
+GET http://localhost:3000/users/{{USER_ID}}/friends
+content-type: application/json
+Authorization: {{JWT}}
+
+### Friend Requests
+
+GET http://localhost:3000/users/{{USER_ID}}/friendrequests
+content-type: application/json
+Authorization: {{JWT}}
