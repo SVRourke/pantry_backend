@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::API
     include ::ActionController::Cookies
-    # protect_from_forgery :exception
-    # before_action :set_csrf_cookie
+    include ::ActionController::RequestForgeryProtection
+    protect_from_forgery
+    before_action :set_csrf_cookie
+    before_action :authorized
 
     # TODO: ADD BEFORE EVERY AUTHORIZED
 
@@ -9,7 +11,7 @@ class ApplicationController < ActionController::API
         cookies.signed[:id] = {
             value: id,
             httponly: true,
-            expires: 10.minutes.from_now
+            expires: 1.day.from_now
         }
     end
     

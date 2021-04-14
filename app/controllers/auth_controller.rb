@@ -1,6 +1,8 @@
 # TODO: GO OVER STATUSES
 class AuthController < ApplicationController
-    
+    skip_before_action :verify_authenticity_token
+    skip_before_action :authorized, only: :create
+
     def create
         user = User.find_by(email: login_params[:email])
 
