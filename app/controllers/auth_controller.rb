@@ -18,6 +18,13 @@ class AuthController < ApplicationController
         end
     end
 
+    def check_auth
+        render json: {
+            userId: current_user.id,
+            status: :ok
+        }
+    end
+
     def destroy
         cookies.delete :id
     end

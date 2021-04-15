@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   post '/login', to: 'auth#create'
   delete '/logout', to: 'auth#destroy'
+  get '/auth_check', to: 'auth#check_auth'
   
   resources :users, only: [:create, :show, :index] do
     resources :friendships, path: :friends, only: [:index, :destroy]
