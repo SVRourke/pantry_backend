@@ -1,6 +1,6 @@
 # TODO: GO OVER STATUSES
 class AuthController < ApplicationController
-    skip_before_action :verify_authenticity_token
+    skip_before_action :verify_authenticity_token, only: :create
     skip_before_action :authorized, only: :create
 
     def create
@@ -19,10 +19,16 @@ class AuthController < ApplicationController
     end
 
     def check_auth
-        render json: {
-            userId: current_user.id,
-            status: :ok
-        }
+        if logged_in? 
+            set_csrf_cookie()
+            render json: {
+                userId: current_user.id,
+                status: :authorized
+            }
+        else
+            unauthorized_message()
+        end    
+
     end
 
     def destroy
