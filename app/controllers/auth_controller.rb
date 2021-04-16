@@ -8,6 +8,7 @@ class AuthController < ApplicationController
 
         if user && user.authenticate(login_params[:password])
             bake_cookies(user.id)
+            set_csrf_cookie()
 
             render json: {  
                 id: user.id,
@@ -20,7 +21,6 @@ class AuthController < ApplicationController
 
     def check_auth
         if logged_in? 
-            set_csrf_cookie()
             render json: {
                 userId: current_user.id,
                 status: :authorized
