@@ -14,11 +14,11 @@ User.create(name: 'Rohan', email: 'Rohan@gmail.com', password: 'password')
 User.create(name: 'Jake', email: 'Jake@gmail.com', password: 'password')
 User.create(name: 'Autumn', email: 'Autumn@gmail.com', password: 'password')
 
-User.all[0].friends.push(User.all[1])
-User.all[0].friends.push(User.all[2])
-User.all[0].friends.push(User.all[3])
-User.all[0].friends.push(User.all[4])
-User.all[0].friends.push(User.all[5])
+User.first.friends.push(User.all[1])
+User.first.friends.push(User.all[2])
+User.first.friends.push(User.all[3])
+User.first.friends.push(User.all[4])
+User.first.friends.push(User.all[5])
 
 User.all[1].friends.push(User.all[2])
 User.all[1].friends.push(User.all[3])
@@ -42,4 +42,33 @@ second.contributors.push(User.first)
 second.contributors.push(User.all[1])
 
 first.contributors.push(User.first)
-first.list_invites.create(requestor: User.first, pending_contributor: User.find_by(name: 'Jake'))
+third.list_invites.create(requestor: User.first, pending_contributor: User.find_by(name: 'Jake'))
+
+second.items.create([
+    {
+        user: User.first,
+        name: "Dried Mangoes",
+        amount: "1 bag",
+    },
+    {
+        user: User.first,
+        name: "Farfalle",
+        amount: "one box",
+    },
+    {
+        user: User.all[1],
+        name: "Chobanis",
+        amount: "2 each strawberry, mixed berries",
+    },
+    {
+        user: User.all[1],
+        name: "Keilbasa",
+        amount: "1 package",
+    }
+])
+
+first.items.create(
+    user: User.first,
+    name: "pencils",
+    amount: "one box"
+)
