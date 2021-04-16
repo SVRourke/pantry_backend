@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_03_12_021328) do
     t.integer "list_id", null: false
     t.string "name"
     t.string "amount"
-    t.boolean "acquired"
+    t.boolean "acquired", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["list_id"], name: "index_items_on_list_id"
