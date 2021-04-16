@@ -32,4 +32,6 @@ content-type: application/json
 GET http://localhost:3000/users/{{USER_ID}}/friendrequests
 content-type: application/json
 
-### Accept Friend Request
+### Index Items
+GET http://localhost:3000/lists/2/items
+content-type: application/json 
