@@ -34,7 +34,8 @@ class ItemsController < ApplicationController
     
     def acquire
         item = Item.find(params[:item_id])
-        item.update(acquired: true)
+        byebug
+        item.update(acquired: !item.acquired)
         
         if item.save
             render json: {
