@@ -5,7 +5,7 @@ class CreateItems < ActiveRecord::Migration[6.1]
       t.references :list, null: false
       t.string :name
       t.string :amount
-      t.boolean :acquired
+      t.boolean :acquired, default: false
 
       t.timestamps
     end
