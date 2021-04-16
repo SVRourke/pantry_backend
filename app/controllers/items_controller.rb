@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+
     def index
         items = Item.where(list_id: params[:list_id])
         render json: items, status: :ok
@@ -34,7 +35,6 @@ class ItemsController < ApplicationController
     
     def acquire
         item = Item.find(params[:item_id])
-        byebug
         item.update(acquired: !item.acquired)
         
         if item.save
