@@ -1,10 +1,14 @@
 # require './item_serializer.'
 class ListSerializer < ActiveModel::Serializer
-  attributes :id, :name, :items
-  has_many :contributions
+  attributes :id, :name, :item_count, :contributor_count
 
-  def items
-    object.items.map { |i| [i.id, ItemSerializer.new(i)] }.to_h
+
+  def item_count
+    object.items.count
+  end
+
+  def contributor_count
+    object.contributions.count
   end
 
 end
