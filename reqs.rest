@@ -35,3 +35,11 @@ content-type: application/json
 ### Index Items
 GET http://localhost:3000/lists/2/items
 content-type: application/json 
+
+### Delete Item
+DELETE http://localhost:3000/lists/2/items/4
+content-type: application/json 
+
+### auth_check
+GET http://localhost:3000/auth_check
+content-type: application/json
