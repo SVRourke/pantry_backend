@@ -9,15 +9,15 @@ class ListInvitesController < ApplicationController
 
     def create
         if !!User.find_by_email(params[:email])
-
+            
             list = List.find(params[:list_id])
             user = User.find_by_email(params[:email])
             
-            invite = list.list_invites.create( 
+            invite = list.list_invites.new( 
                 requestor: current_user, 
                 pending_contributor: user
             )
-            if invite.valid?
+            if invite.save
                 render json: {
                     list_invite: invite},
                     status: :created
