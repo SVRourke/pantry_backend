@@ -43,3 +43,8 @@ content-type: application/json
 ### auth_check
 GET http://localhost:3000/auth_check
 content-type: application/json
+
+### Index list contributors
+
+GET http://localhost:3000/lists/2/contributions
+content-type: application/json
