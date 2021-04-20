@@ -22,7 +22,7 @@ class AuthController < ApplicationController
     def check_auth
         if logged_in? 
             render json: {
-                userId: current_user.id,
+                id: current_user.id,
                 status: :authorized
             }
         else
