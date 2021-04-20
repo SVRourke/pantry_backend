@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   end
   
   resources :lists, only: [] do
-    resources :list_invites, only: [:create, :update, :destroy] 
+    resources :list_invites, only: [:create, :update, :destroy]
+    resources :contributions, only: [:index]
     resources :items, only: [:index, :show, :create, :destroy] do
       put :update
       patch :acquire
