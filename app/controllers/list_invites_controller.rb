@@ -7,6 +7,10 @@ class ListInvitesController < ApplicationController
                 status: :ok
     end
 
+    def accept
+        byebug
+    end
+
     def create
         if !!User.find_by_email(params[:email])
             
@@ -50,18 +54,11 @@ class ListInvitesController < ApplicationController
     
     # ALERT: REDO
     def destroy
-        list = List.find(params[:list_id])
         invite = ListInvite.find(params[:id])
-
-        if current_user.lists.include?(list) && invite.requestor == current_user
-            invite.destroy
-            render json: {
-                message: "deleted invite"}, 
-                status: :gone
-        else
-            render json: {
-                message: "could not complete request"}, 
-                status: :bad_request
-        end
+        # byebug
+        invite.destroy
+        render json: {
+            message: "deleted invite"}, 
+            status: :gone
     end
 end
