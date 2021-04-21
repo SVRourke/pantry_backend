@@ -18,7 +18,6 @@ User.first.friends.push(User.all[1])
 User.first.friends.push(User.all[2])
 User.first.friends.push(User.all[3])
 User.first.friends.push(User.all[4])
-User.first.friends.push(User.all[5])
 
 User.all[1].friends.push(User.all[2])
 User.all[1].friends.push(User.all[3])
@@ -32,8 +31,9 @@ first = List.create(name: "Sam's List")
 second = List.create(name: "Rain & Sam's List")
 third = List.create(name: "Squad")
 
+
 User.all.each do |user|
-    if user.name != 'Jake' 
+    if !['Jake', 'Sam'].include? user.name 
         third.contributors.push(user)
     end
 end
@@ -43,6 +43,7 @@ second.contributors.push(User.all[1])
 
 first.contributors.push(User.first)
 third.list_invites.create(requestor: User.first, pending_contributor: User.find_by(name: 'Jake'))
+third.list_invites.create(requestor: User.all[1], pending_contributor: User.first)
 
 second.items.create([
     {
