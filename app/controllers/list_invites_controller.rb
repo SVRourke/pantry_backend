@@ -8,7 +8,18 @@ class ListInvitesController < ApplicationController
     end
 
     def accept
-        byebug
+        invite = ListInvite.find(params[:list_invite_id])
+        if current_user == invite.pending_contributor
+            list = invite.list
+            invite.accept()
+            
+            render json:
+                list,
+                status: :ok
+        else
+            unauthorized()
+        end
+        
     end
 
     def create
