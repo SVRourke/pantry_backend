@@ -19,7 +19,12 @@ class ListsController < ApplicationController
     
     def create
         list = current_user.lists.create(new_list_params)        
-        list ? successful_create(list) : model_errors(list.errors.full_messages)
+        if list 
+            render json: list,
+            status: :ok
+        else
+            model_errors(list.errors.full_messages)
+        end
     end
     
     def destroy
@@ -41,6 +46,6 @@ class ListsController < ApplicationController
     private
 
     def new_list_params
-        params.require(:list_info).permit(:name)
+        params.require(:list).permit(:name)
     end
 end
