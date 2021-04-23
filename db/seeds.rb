@@ -41,9 +41,10 @@ end
 second.contributors.push(User.first)
 second.contributors.push(User.all[1])
 
-first.contributors.push(User.first)
+# first.contributors.push(User.first)
 third.list_invites.create(requestor: User.first, pending_contributor: User.find_by(name: 'Jake'))
 third.list_invites.create(requestor: User.all[1], pending_contributor: User.first)
+first.list_invites.create(requestor: User.all[1], pending_contributor: User.first)
 
 second.items.create([
     {
