@@ -49,6 +49,19 @@ class FriendrequestsController < ApplicationController
         end
     end
 
+    def accept
+        friend_request = Friendrequest.find(params[:friendrequest_id])
+        friend = friend_request.requestor
+
+        if current_user === friend_request.pending_friend
+            friend_request.accept()
+            render json: friend, status: :ok
+        else
+            something_broke()
+        end
+    end
+
+
     def destroy
         req = Friendrequest.find(params[:id])
         if current_user == req.requestor
