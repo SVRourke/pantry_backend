@@ -48,3 +48,6 @@ content-type: application/json
 
 GET http://localhost:3000/lists/2/contributions
 content-type: application/json
+
+### index friend requests
+GET http://localhost:3000/users/1/friendrequests
