@@ -55,7 +55,8 @@ class FriendrequestsController < ApplicationController
 
         if current_user === friend_request.pending_friend
             friend_request.accept()
-            render json: friend, status: :ok
+            fs = current_user.friendships.find {|fs| fs.friend_id == friend.id}
+            render json: fs, serializer: FriendsSerializer, status: :ok
         else
             something_broke()
         end
