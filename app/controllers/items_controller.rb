@@ -8,7 +8,11 @@ class ItemsController < ApplicationController
     def create
         item = List.find(params[:list_id]).items.build(item_params)
         item.user = current_user
-        item.save ? successful_create(item) : model_errors(item.errors.full_messages);
+        if item.save 
+            render json: item, status: :ok
+        else
+            model_errors(item.errors.full_messages);
+        end
     end
 
     def update
