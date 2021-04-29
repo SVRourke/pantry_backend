@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
         if user.valid?
             render json: { 
-                user: BulkUserInfoSerializer.new(user), 
+                user: BulkUserInfoSerializer.new(user)}, 
                 status: :created
             return
         end
