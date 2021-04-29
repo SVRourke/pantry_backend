@@ -76,11 +76,7 @@ class ApplicationController < ActionController::API
     end
 
     def successful_create(record)
-        render json: {
-            message: "#{record.name} created #{record.created_at}",
-            id: record.id
-        }, 
-            status: :created
+        render json: record, status: :created
     end
 
     private
