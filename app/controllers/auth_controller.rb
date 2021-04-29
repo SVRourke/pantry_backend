@@ -33,6 +33,9 @@ class AuthController < ApplicationController
 
     def destroy
         cookies.delete :id
+        session.clear
+
+        successful_destroy()
     end
 
     private
