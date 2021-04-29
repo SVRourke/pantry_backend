@@ -5,10 +5,10 @@ class AuthController < ApplicationController
 
     def create
         user = User.find_by(email: login_params[:email])
+        set_csrf_cookie()
 
         if user && user.authenticate(login_params[:password])
             bake_cookies(user.id)
-            set_csrf_cookie()
 
             render json: {  
                 id: user.id,
@@ -32,7 +32,6 @@ class AuthController < ApplicationController
     end
 
     def destroy
-        cookies.delete :id
         session.clear
 
         successful_destroy()
