@@ -5,9 +5,9 @@ class UsersController < ApplicationController
         user = User.create(user_params)
 
         if user.valid?
-            render json: { 
-                user: BulkUserInfoSerializer.new(user)}, 
-                status: :created
+            render json: {  
+                id: user.id,
+            }, status: :created
             return
         end
 
