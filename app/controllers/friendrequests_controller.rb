@@ -65,12 +65,14 @@ class FriendrequestsController < ApplicationController
 
     def destroy
         req = Friendrequest.find(params[:id])
-        if current_user == req.requestor
+        
+        if current_user == req.requestor || current_user == req.pending_friend
             req.destroy
             successful_destroy()
         else
             unauthorized_message()
         end
+
     end
     
 end
