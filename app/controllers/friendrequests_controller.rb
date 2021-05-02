@@ -11,7 +11,7 @@ class FriendrequestsController < ApplicationController
     
     # ALERT: Investigate what the rescue is for and make error message
     def create
-        requestee = User.find_by(email: params[:email])
+        requestee = User.find_by_email(params[:email].upcase.upcase)
 
         if requestee
             begin

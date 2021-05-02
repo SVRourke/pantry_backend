@@ -23,10 +23,10 @@ class ListInvitesController < ApplicationController
     end
 
     def create
-        if !!User.find_by_email(params[:email])
+        if !!User.find_by_email(params[:email].upcase)
             
             list = List.find(params[:list_id])
-            user = User.find_by_email(params[:email])
+            user = User.find_by_email(params[:email].upcase)
             
             invite = list.list_invites.new( 
                 requestor: current_user, 

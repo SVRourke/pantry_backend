@@ -4,7 +4,7 @@ class AuthController < ApplicationController
     skip_before_action :authorized, only: :create
 
     def create
-        user = User.find_by(email: login_params[:email])
+        user = User.find_by_email(login_params[:email].upcase)
         set_csrf_cookie()
 
         if user && user.authenticate(login_params[:password])

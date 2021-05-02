@@ -16,7 +16,7 @@ class ApplicationController < ActionController::API
     
     def current_user
         if cookies.signed[:id]
-            @user = User.find_by(id: cookies.signed[:id])
+            @user = User.find( cookies.signed[:id])
         end
     end
 
