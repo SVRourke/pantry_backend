@@ -2,7 +2,11 @@ class UsersController < ApplicationController
     skip_before_action :authorized, only: [:create]
 
     def create
-        user = User.create(user_params)
+        user = User.create(
+            name: user_params[:user][:name],
+            email: user_params[:user][:email].upcase,
+            password: user_params[:user][:password]
+        )
 
         if user.valid?
             render json: {  
