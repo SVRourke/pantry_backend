@@ -1,6 +1,10 @@
 class BulkUserInfoSerializer < ActiveModel::Serializer
   attributes :id, :email, :name, :list_count, :friend_count, :sent_requests, :received_requests, :sent_invites, :received_invites
 
+  def email
+    object.email.downcase
+  end
+
   def list_count
     object.lists.count
   end
