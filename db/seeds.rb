@@ -38,6 +38,7 @@ User.all.each do |user|
     end
 end
 
+first.contributors.push(User.first)
 second.contributors.push(User.first)
 second.contributors.push(User.all[1])
 
