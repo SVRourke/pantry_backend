@@ -6,13 +6,13 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create(name: 'Sam', email: 'Sam@gmail.com', password: 'password')
-User.create(name: 'Sharain', email: 'Sharain@gmail.com', password: 'password')
-User.create(name: 'Maya', email: 'Maya@gmail.com', password: 'password')
+User.create(name: 'Sam', email: 'SAM@GMAIL.COM', password: 'password')
+User.create(name: 'Sharain', email: 'RAIN@GMAIL.COM', password: 'password')
+User.create(name: 'Maya', email: 'MAYA@GMAIL.COM', password: 'password')
 
-User.create(name: 'Rohan', email: 'Rohan@gmail.com', password: 'password')
-User.create(name: 'Jake', email: 'Jake@gmail.com', password: 'password')
-User.create(name: 'Autumn', email: 'Autumn@gmail.com', password: 'password')
+User.create(name: 'Rohan', email: 'ROHAN@GMAIL.COM', password: 'password')
+User.create(name: 'Jake', email: 'JAKE@GMAIL.COM', password: 'password')
+User.create(name: 'Autumn', email: 'AUTUMN@GMAIL.COM', password: 'password')
 
 User.first.friends.push(User.all[1])
 User.first.friends.push(User.all[2])
