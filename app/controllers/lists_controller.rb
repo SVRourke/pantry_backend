@@ -1,9 +1,8 @@
 # TODO: add serializers
 class ListsController < ApplicationController
     def index
-        lists = current_user.lists
         render json: 
-            lists,
+            current_user.lists,
             status: :ok
     end
 
