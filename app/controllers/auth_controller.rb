@@ -32,7 +32,8 @@ class AuthController < ApplicationController
     end
 
     def destroy
-        session.clear
+        cookies.delete :id
+        cookies.delete :'CSRF-TOKEN'
 
         successful_destroy()
     end
