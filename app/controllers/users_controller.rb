@@ -1,17 +1,17 @@
 class UsersController < ApplicationController
+    skip_before_action :verify_authenticity_token, only: :create
     skip_before_action :authorized, only: [:create]
 
     def create
         user = User.create(
-            name: user_params[:user][:name],
-            email: user_params[:user][:email].upcase,
-            password: user_params[:user][:password]
+            name: user_params[:name],
+            email: user_params[:email].upcase,
+            password: user_params[:password]
         )
+        # byebug
 
         if user.valid?
-            render json: {  
-                id: user.id,
-            }, status: :created
+            render json: user, status: :created
             return
         end
 
