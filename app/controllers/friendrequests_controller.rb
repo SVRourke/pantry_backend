@@ -1,5 +1,4 @@
 class FriendrequestsController < ApplicationController
-    # /users/:user_id/friendrequests
     def index
         requests = current_user.all_requests
 

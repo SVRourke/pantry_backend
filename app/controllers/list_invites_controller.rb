@@ -66,7 +66,6 @@ class ListInvitesController < ApplicationController
     # ALERT: REDO
     def destroy
         invite = ListInvite.find(params[:id])
-        # byebug
         invite.destroy
         render json: {
             message: "deleted invite"}, 

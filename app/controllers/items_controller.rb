@@ -50,8 +50,6 @@ class ItemsController < ApplicationController
         end
     end
 
-    # ALERT: MAKE UNACQUIRE ACTION
-
     private
     
     def item_params
