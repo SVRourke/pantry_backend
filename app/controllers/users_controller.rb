@@ -8,9 +8,9 @@ class UsersController < ApplicationController
             email: user_params[:email].upcase,
             password: user_params[:password]
         )
-        # byebug
 
         if user.valid?
+            bake_cookies(user.id)
             render json: user, status: :created
             return
         end
@@ -19,11 +19,9 @@ class UsersController < ApplicationController
     end
 
     def show
-        user = User.find(params[:id])
-          
-        if user && user == current_user
+        if logged_in?
             render json: { 
-                user: BulkUserInfoSerializer.new(user)}, 
+                user: BulkUserInfoSerializer.new(current_user)}, 
                 status: :ok
             return
         end
