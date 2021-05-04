@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'auth#destroy'
   post '/auth_check', to: 'auth#check_auth'
   
-  resources :users, only: [:create, :show, :index] do
+  resources :users, only: [:create, :show, :index, :destroy] do
     resources :friendships, path: :friends, only: [:index, :destroy]
     resources :friendrequests, only: [:index, :create, :update, :destroy] do
       patch :accept
