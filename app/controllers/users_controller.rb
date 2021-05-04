@@ -19,13 +19,17 @@ class UsersController < ApplicationController
     end
 
     def show
-        if logged_in?
-            render json: { 
-                user: BulkUserInfoSerializer.new(current_user)}, 
-                status: :ok
-            return
-        end
-        unauthorized_message()
+        render json: { 
+            user: BulkUserInfoSerializer.new(current_user)}, 
+            status: :ok
+        return
+    end
+
+    def destroy
+        current_user.destroy
+        cookies.delete :id
+        cookies.delete :'CSRF-TOKEN'
+        successful_destroy()
     end
     
     private
