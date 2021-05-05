@@ -13,7 +13,10 @@ class AuthController < ApplicationController
                     id: user.id}, status: :created
             end
         else
-            render not_found()
+            render json: {
+                error: 'Not Found'},
+                status: 404
+
         end
     end
     
@@ -31,7 +34,9 @@ class AuthController < ApplicationController
 
     def destroy
         # TODO: FIGURE THIS ONE OUT
-        successful_destroy()
+        render json: {
+            message: 'record deleted'},
+            status: 410
     end
 
     private

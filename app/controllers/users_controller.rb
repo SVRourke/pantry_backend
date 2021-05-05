@@ -16,8 +16,10 @@ class UsersController < ApplicationController
                 status: :created
             return
         end
-        model_errors(user.errors.full_messages)
 
+        render json: {
+            error: 'user.errors.full_messages'},
+            status: 422
     end
 
     def show
@@ -29,7 +31,9 @@ class UsersController < ApplicationController
 
     def destroy
         current_user.destroy
-        successful_destroy()
+        render json: {
+            message: 'User Deleted'},
+            status: 410
     end
     
     private

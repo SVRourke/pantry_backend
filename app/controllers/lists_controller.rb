@@ -12,7 +12,9 @@ class ListsController < ApplicationController
             render json: list, 
             status: :ok
         else
-            unauthorized_message()
+            render json: {
+                error: "Unauthorized"},
+                status: 401
         end
     end
     
@@ -22,7 +24,9 @@ class ListsController < ApplicationController
             render json: list,
             status: :ok
         else
-            model_errors(list.errors.full_messages)
+            render json: {
+                error: list.errors.full_messages},
+                status: 422
         end
     end
     
@@ -31,15 +35,29 @@ class ListsController < ApplicationController
 
         if current_user.lists.include?(list)
             list.destroy
-            successful_destroy()
+            render json: {
+                message: "List destroyed"},
+                status: 410
+
         else
-            unauthorized_message()
+            render json: {
+                error: "Unauthorized"},
+                status: 401
         end
     end
 
     def leave
         list = List.find(params[:list_id])
-        current_user.leave_list(list) ? successful_destroy() : not_found()
+        if list
+            current_user.leave_list(list) 
+            render json: {
+                message: 'Left List'},
+                status: 410 
+        else
+            render json: {
+                error: 'Not Found'},
+                status: 404
+        end
     end
 
     private

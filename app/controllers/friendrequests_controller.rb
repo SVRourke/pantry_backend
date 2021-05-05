@@ -10,21 +10,26 @@ class FriendrequestsController < ApplicationController
     
     # ALERT: Investigate what the rescue is for and make error message
     def create
-        requestee = User.find_by_email(params[:email].upcase.upcase)
+        requestee = User.find_by_email(params[:email].upcase)
+        # byebug
 
         if requestee
-            begin
-                current_user.pending_friends.push(requestee)
+            req = Friendrequest.new(
+                requestor: current_user,
+                pending_friend: requestee                
+            )
+            if req.save
                 render json: {
                     message: "Request sent to #{requestee.name}"}, 
                     status: :created
-
-            rescue
-                something_broke()
+            else
+                render json: {
+                    error: req.errors.full_messages},
+                    status: 422
             end
 
         else
-            not_found()
+            render json: {error: 'Not Found'}, status: 404
         end
     end
 
@@ -36,14 +41,20 @@ class FriendrequestsController < ApplicationController
             
             when 'accept'
                 friend_request.accept
-                request_accepted()
+                render json: {
+                    message: 'request accepted'},
+                    status: 200
             
             when 'decline'
                 friend_request.destroy
-                request_declined()
+                render json: {
+                    message: 'request deleted'},
+                    status: 410
             
             else
-                something_broke()
+                render json: {
+                    error: 'SERIOUS Error'},
+                status: 500
             end
         end
     end
@@ -56,8 +67,6 @@ class FriendrequestsController < ApplicationController
             friend_request.accept()
             fs = current_user.friendships.find {|fs| fs.friend_id == friend.id}
             render json: fs, serializer: FriendsSerializer, status: :ok
-        else
-            something_broke()
         end
     end
 
@@ -67,9 +76,13 @@ class FriendrequestsController < ApplicationController
         
         if current_user == req.requestor || current_user == req.pending_friend
             req.destroy
-            successful_destroy()
+            render json: {
+                message: 'request deleted'},
+                status: 410
         else
-            unauthorized_message()
+            render json: {
+                error: 'Unauthorized'},
+                status: 401
         end
 
     end

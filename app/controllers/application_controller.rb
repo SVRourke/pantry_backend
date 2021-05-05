@@ -1,6 +1,12 @@
 class ApplicationController < ActionController::API
     before_action :authenticate
 
+    rescue_from 'JWT::ExpiredSignature' do |exception|
+        render json: {
+            error: "Please Log In"},
+            status: 401
+    end
+
     def logged_in?
         !!current_user
     end
@@ -16,7 +22,6 @@ class ApplicationController < ActionController::API
     end
 
     def authenticate
-        puts "AUTHENTICATING+++++++++++++++"
         unless logged_in?
             render json: {error: 'unauthorized'}, status: 401
         end
@@ -40,12 +45,16 @@ class ApplicationController < ActionController::API
     end
     
     def decoded_token
-        t = JWT.decode token(), "REPLACEIMMEDIATELY", true, { algorithm: 'HS256' }
-        t[0]
+        begin
+            t = JWT.decode token(), "REPLACEIMMEDIATELY", true, { algorithm: 'HS256' }
+            t[0]
+        rescue
+            return false
+        end
     end
 
     def auth_present?
-        !!token()
+        !!decoded_token()
     end
     
 end

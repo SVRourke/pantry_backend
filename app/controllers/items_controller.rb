@@ -11,7 +11,9 @@ class ItemsController < ApplicationController
         if item.save 
             render json: item, status: :ok
         else
-            model_errors(item.errors.full_messages);
+            render json: {
+                error: item.errors.full_messages},
+                status: 422
         end
     end
 
@@ -24,16 +26,22 @@ class ItemsController < ApplicationController
                 msg: "Updated #{item.updated_at}"},
                 status: :ok 
         else
-            model_errors(item.errors.full_messages)
+            render json: {
+                error: item.errors.full_messages},
+                status: 422
         end
     end
 
     def destroy
         if List.find(params[:list_id]).contributors.include?(current_user)
             Item.find(params[:id]).destroy
-            successful_destroy()
+            render json: {
+                message: "Item deleted"},
+                status: 410
         else
-            unauthorized_message()
+            render json: {
+                error: "Not Found"},
+                status: 404
         end
     end
     
@@ -46,7 +54,9 @@ class ItemsController < ApplicationController
                 messages: "item acquired"},
                 status: :ok
         else
-            model_errors(item.errors.full_messages)
+            render json: {
+                error: item.errors.full_messages},
+                status: 422
         end
     end
 

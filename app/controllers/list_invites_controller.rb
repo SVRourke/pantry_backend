@@ -17,7 +17,9 @@ class ListInvitesController < ApplicationController
                 list,
                 status: :ok
         else
-            unauthorized()
+            render json: {
+                error: "Unauthorized"},
+                status: 401
         end
         
     end
@@ -37,12 +39,16 @@ class ListInvitesController < ApplicationController
                     list_invite: invite},
                     status: :created
             else
-                model_errors(invite.errors.messages)
+                render json: {
+                    error: invite.errors.full_messages},
+                    status: 422
             end
 
         
         else
-            not_found()
+            render json: {
+                error: "Not Found"},
+                status: 404
         end
     end
 
@@ -52,23 +58,35 @@ class ListInvitesController < ApplicationController
         case params[:type]
         when 'accept'
             invite.accept
-            request_accepted()
+            render json: {
+                message: "Request accepted!"},
+                status: 200
             
         when 'decline'
             invite.destroy
-            request_declined()
+            render json: {
+                message: "Request deleted"},
+                status: 410
 
         else
-            something_broke()
+            render json: {
+                error: "SERIOUS Error"},
+                status: 400
         end
     end
     
     # ALERT: REDO
     def destroy
         invite = ListInvite.find(params[:id])
-        invite.destroy
-        render json: {
-            message: "deleted invite"}, 
-            status: :gone
+        if invite
+            invite.destroy
+            render json: {
+                message: "deleted invite"}, 
+                status: :gone
+        else
+            render json: {
+                error: "Not Found"},
+                status: 404
+        end
     end
 end
