@@ -1,89 +1,52 @@
 class ApplicationController < ActionController::API
-    include ::ActionController::Cookies
-    include ::ActionController::RequestForgeryProtection
-    protect_from_forgery with: :exception
-    before_action :authorized
-    before_action :set_csrf_cookie
-
-
-    def bake_cookies(id)
-        cookies.signed[:id] = {
-            value: id,
-            httponly: true,
-            expires: 1.day.from_now
-        }
-    end
-    
-    def current_user
-        if cookies.signed[:id]
-            @user = User.find( cookies.signed[:id])
-        end
-    end
+    before_action :authenticate
 
     def logged_in?
         !!current_user
     end
 
-    def authorized
-        render json: { 
-            message: 'Please log in' 
-        }, 
-        status: :unauthorized unless logged_in?
+    def current_user
+        if auth_present?
+            user = User.find(decoded_token['id'])
+
+            if user
+                @current_user ||= user
+            end
+        end
     end
 
-
-    # Response Messages
-    def something_broke
-        render json: {
-            message: "Something broke, try again later..."},
-            status: :unprocessable_entity
+    def authenticate
+        puts "AUTHENTICATING+++++++++++++++"
+        unless logged_in?
+            render json: {error: 'unauthorized'}, status: 401
+        end
     end
 
-    def not_found()
-        render json: {
-            error: "Not Found"},
-            status: :not_found
+    def build_jwt(id)
+        payload = {
+            'iss': 'pantry-api',
+            'exp': 1.hour.from_now.to_i,
+            'id': id
+        }
+        return JWT.encode payload, "REPLACEIMMEDIATELY", 'HS256'
     end
 
-    def model_errors(error_messages)
-        render json: {
-            error: error_messages},
-            status: :unprocessable_entity
-    end
-
-    def unauthorized_message
-        render json: {
-            error: "Not Authorized"},
-            status: :unauthorized
-    end
-
-    def request_accepted
-        render json: {
-            message: "request accepted"},
-            status: :ok
-    end
-
-    def request_declined
-        render json: {
-            message: "request declined."},
-            status: :ok
-    end
-
-    def successful_destroy
-        render json: {
-            message: "record deleted!"},
-            status: :gone
-    end
-
-    def successful_create(record)
-        render json: record, status: :created
-    end
+  
 
     private
+
+    def token
+        request.headers['Authorization']
+    end
     
-    def set_csrf_cookie
-        cookies["CSRF-TOKEN"] = form_authenticity_token
+    def decoded_token
+        t = JWT.decode token(), "REPLACEIMMEDIATELY", true, { algorithm: 'HS256' }
+        t[0]
     end
 
-
+    def auth_present?
+        !!token()
+    end
+    
 end
+
