@@ -1,39 +1,36 @@
 # TODO: GO OVER STATUSES
 class AuthController < ApplicationController
-    skip_before_action :verify_authenticity_token, only: :create
-    skip_before_action :authorized, only: :create
+    skip_before_action :authenticate
+    serialization_scope :view_context
 
     def create
-        user = User.find_by_email(login_params[:email].upcase)
-        set_csrf_cookie()
+        user = User.find_by_email(login_params[:email].upcase())
 
-        if user && user.authenticate(login_params[:password])
-            bake_cookies(user.id)
-
-            render json: {  
-                id: user.id,
-                status: :created
-            }
+        if user 
+            if user.authenticate(login_params[:password])
+                render json: {
+                    jwt: build_jwt(user.id),
+                    id: user.id}, status: :created
+            end
         else
-            unauthorized_message()
+            render not_found()
         end
     end
-
-    def check_auth
-        if logged_in? 
-            render json: {
-                id: current_user.id,
-                status: :authorized
-            }
-        else
-            unauthorized_message()
-        end    
-
-    end
+    
+    # user for refresh/reissue i think
+    # def check_auth
+    #     if logged_in?
+    #         render json: {
+    #             userId: current_user(),
+    #             jwt: request.headers["Authorization"],
+    #         }, status: 200
+    #     else
+    #         unauthorized_message()
+    #     end
+    # end
 
     def destroy
-        cookies.delete :id
-        cookies.delete :'CSRF-TOKEN'
+        # TODO: FIGURE THIS ONE OUT
         successful_destroy()
     end
 
