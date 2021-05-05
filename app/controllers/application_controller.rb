@@ -33,6 +33,7 @@ class ApplicationController < ActionController::API
             'exp': 1.hour.from_now.to_i,
             'id': id
         }
+        # ALERT: CHANGE TO ENV VAR
         return JWT.encode payload, "REPLACEIMMEDIATELY", 'HS256'
     end
 
