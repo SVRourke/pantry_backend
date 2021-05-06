@@ -34,6 +34,11 @@ module PantryBackend
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
 
+    config.hosts << 'https://pantry.svrourke.com'
+    config.hosts << 'evening-temple-33286.herokuapp.com'
+
+    config.action_controller.forgery_protection_origin_check = false
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
