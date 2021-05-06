@@ -33,8 +33,7 @@ class ApplicationController < ActionController::API
             'exp': 1.hour.from_now.to_i,
             'id': id
         }
-        # ALERT: CHANGE TO ENV VAR
-        return JWT.encode payload, "REPLACEIMMEDIATELY", 'HS256'
+        return JWT.encode payload, ENV["JWT_KEY"], 'HS256'
     end
 
   
@@ -47,7 +46,7 @@ class ApplicationController < ActionController::API
     
     def decoded_token
         begin
-            t = JWT.decode token(), "REPLACEIMMEDIATELY", true, { algorithm: 'HS256' }
+            t = JWT.decode token(), ENV["JWT_KEY"], true, { algorithm: 'HS256' }
             t[0]
         rescue
             return false
