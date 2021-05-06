@@ -35,7 +35,7 @@ module PantryBackend
     config.middleware.use ActionDispatch::Session::CookieStore
 
     config.hosts << 'https://pantry.svrourke.com'
-    config.hosts << 'evening-temple-33286.herokuapp.com'
+    config.hosts << 'whispering-plains-35440.herokuapp.com'
 
     config.action_controller.forgery_protection_origin_check = false
 
