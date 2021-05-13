@@ -1,6 +1,6 @@
 # TODO: GO OVER STATUSES
 class AuthController < ApplicationController
-    skip_before_action :authenticate
+    skip_before_action :authenticate, only: [:create]
     serialization_scope :view_context
 
     def create
