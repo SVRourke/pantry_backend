@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    skip_before_action :authenticate, only: :create
+    skip_before_action :authorized, only: [:create]
     serialization_scope :view_context
 
     def create
@@ -10,6 +10,7 @@ class UsersController < ApplicationController
         )
 
         if user.save
+            session[:user_id] = user.id
             render json: {
                 jwt: build_jwt(user.id), 
                 id: user.id},
