@@ -1,15 +1,15 @@
 # TODO: GO OVER STATUSES
 class AuthController < ApplicationController
-    skip_before_action :authenticate, only: [:create]
-    serialization_scope :view_context
-
+    skip_before_action :verify_authenticity_token, only: :create
+    skip_before_action :authorized, only: :create
+    
     def create
         user = User.find_by_email(login_params[:email].upcase())
 
         if user 
             if user.authenticate(login_params[:password])
+                session[:user_id] = user.id
                 render json: {
-                    jwt: build_jwt(user.id),
                     id: user.id}, status: :created
             end
         else
@@ -20,20 +20,9 @@ class AuthController < ApplicationController
         end
     end
     
-    # user for refresh/reissue i think
-    # def check_auth
-    #     if logged_in?
-    #         render json: {
-    #             userId: current_user(),
-    #             jwt: request.headers["Authorization"],
-    #         }, status: 200
-    #     else
-    #         unauthorized_message()
-    #     end
-    # end
-
     def destroy
         # TODO: FIGURE THIS ONE OUT
+        cookies.delete :id
         render json: {
             message: 'record deleted'},
             status: 410
