@@ -36,9 +36,8 @@ module PantryBackend
 
     config.hosts << 'api.pantry.svrourke.com'
     config.hosts << 'https://pantry.svrourke.com'
-    # config.hosts << 'https://localhost:4000'
-    # config.hosts << 'whispering-plains-35440.herokuapp.com'
-
+    config.hosts << 'https://localhost:4000'
+    
     config.action_controller.forgery_protection_origin_check = false
 
     # Configuration for the application, engines, and railties goes here.
