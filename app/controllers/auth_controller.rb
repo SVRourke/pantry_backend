@@ -8,7 +8,8 @@ class AuthController < ApplicationController
 
         if user 
             if user.authenticate(login_params[:password])
-                session[:user_id] = user.id
+                # session[:user_id] = user.id
+                bake_cookie(user.id)
                 render json: {
                     id: user.id}, status: :created
             end

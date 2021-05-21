@@ -11,9 +11,9 @@ class UsersController < ApplicationController
         )
 
         if user.save
-            session[:user_id] = user.id
+            # session[:user_id] = user.id
+            bake_cookie(user.id)
             render json: {
-                jwt: build_jwt(user.id), 
                 id: user.id},
                 status: :created
             return
