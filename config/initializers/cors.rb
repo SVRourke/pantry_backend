@@ -7,7 +7,7 @@
 # REQUIRES ENV VAR ORIGIN
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins ENV["ORIGIN"]
+    origins Rails.env == 'development' ? 'http://localhost:4000' : ENV["ORIGIN"]
     resource('*', headers: :any, methods: :any, credentials: true)
     end
 end
