@@ -23,7 +23,7 @@ class AuthController < ApplicationController
     
     def destroy
         # TODO: FIGURE THIS ONE OUT
-        cookies.delete :id
+        cookies.signed.delete :id, domain: 'svrourke.com'
         render json: {
             message: 'record deleted'},
             status: 410
