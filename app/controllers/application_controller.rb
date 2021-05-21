@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
     end
 
     def current_user
-        current_user = current_user ||= User.find(cookies.signed[:id])
+        current_user = current_user ||= User.find(cookies.signed[:id]) || false
     end
 
     def logged_in?
