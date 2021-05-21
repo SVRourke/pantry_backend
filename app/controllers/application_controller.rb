@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
         cookies.signed[:id] = {
             value: id,
             httponly: true,
-            expires: 1.day.from_now
+            expires: 1.day.from_now,
             domain: 'svrourke.com'
         }
     end
