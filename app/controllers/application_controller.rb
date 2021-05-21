@@ -12,8 +12,8 @@ class ApplicationController < ActionController::API
             value: id,
             httponly: true,
             expires: 1.day.from_now,
-            domain: 'svrourke.com'
         }
+        Rails.env != 'development' ? cookies["CSRF-TOKEN"]['domain'] = 'svrourke.com' : nil
     end
 
     def current_user
@@ -36,9 +36,9 @@ class ApplicationController < ActionController::API
     def set_csrf_cookie
         cookies["CSRF-TOKEN"] = {
             value: form_authenticity_token,
-            domain: 'svrourke.com',
             httponly: false
         }
+        Rails.env != 'development' ? cookies["CSRF-TOKEN"]['domain'] = 'svrourke.com' : nil
     end
 
 end
