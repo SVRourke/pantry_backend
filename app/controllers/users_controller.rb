@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
-    skip_before_action :authorized, only: [:create]
+    skip_before_action :authorized, only: :create
     serialization_scope :view_context
+    skip_before_action :verify_authenticity_token, only: :create
 
     def create
+        byebug
         user = User.new(
             name: user_params[:name],
             email: user_params[:email].upcase,
