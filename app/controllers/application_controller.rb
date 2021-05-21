@@ -12,11 +12,12 @@ class ApplicationController < ActionController::API
             value: id,
             httponly: true,
             expires: 1.day.from_now
+            domain: 'svrourke.com'
         }
     end
 
     def current_user
-        current_user = current_user ||= User.find(cookies[:id])
+        current_user = current_user ||= User.find(cookies.signed[:id])
     end
 
     def logged_in?
