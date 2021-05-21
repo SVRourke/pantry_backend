@@ -34,7 +34,7 @@ module PantryBackend
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
 
-    config.hosts << 'https://api.pantry.svrourke.com'
+    config.hosts << 'api.pantry.svrourke.com'
     config.hosts << 'https://pantry.svrourke.com'
     # config.hosts << 'https://localhost:4000'
     # config.hosts << 'whispering-plains-35440.herokuapp.com'
