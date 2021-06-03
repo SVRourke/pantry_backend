@@ -1,11 +1,8 @@
 # **Pantry Backend**
 Pantry [(live)](https://pantry.svrourke.com) is a collaborative grocery list app created to provide a single place my partner and I could keep track of what we need and what we've purchased to solve the problems of forgotten and extra groceries. The full project is a ruby on rails api consumed by a react frontend.
 
-* System dependencies
+<br>
 
-* Configuration
-
-* Database creation / initialization
 
 ## Getting Started
 ---
@@ -25,7 +22,7 @@ Next It's time to create the database, to do so run the following command.
 ```
 $ rails db:create db:migrate
 ```
-> note: this app requires postgres to run in production
+> note: this app requires postgresql to run in production
 
 If you would like to seed the database with some sample data you can do so, this will provide you with some examples of the various functions of the app, lists, friends, friend requests, list invites, items, etc. You can log in with the following credentials email: sam@gmail.com password: password
 ```
@@ -43,9 +40,14 @@ $ rails s
 ```
 ### Built With
 * Ruby On Rails
+* ActiveModel::Serializer
+
 ## Deployment
 ---
-* Heroku
+This app is deployed on heroku which was simple enough, I connected heroku to my github and selected the proper branch from this repository. I originally had a separate 'deploy' branch which I had set up to automatically build when I pushed but I made the code more flexible and now use the main branch and manually deploy when I have accumulated enough of a difference to make it necessary.
+
+For cookie security the deployed backend must have the same root host name as the frontend for example my frontend is up at pantry.svrourke.com and my backend is api.pantry.svrourke.com
+
 ## State Of The Project
 ---
 This project was solely created for 2 reasons:
@@ -54,6 +56,3 @@ This project was solely created for 2 reasons:
 
 I intend to continue development on this project as it is by no means 'finished' in it's current state. I have many ideas for functionality that can be added.  This project is intended to be a showcase of my skills for future employers, so  if you want to contribute I would be honored but I would prefer if you forked it and worked on it for yourself, if someone would like to make a product out of this that is fine I only ask that you contact me to let me know as I would be happy to hear about it.
 
-## Acknowledgements
----
-* Blah
