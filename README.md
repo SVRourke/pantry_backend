@@ -1,5 +1,7 @@
 # **Pantry Backend**
-Pantry [(live)](https://pantry.svrourke.com) is a collaborative grocery list app created to provide a single place my partner and I could keep track of what we need and what we've purchased to solve the problems of forgotten and extra groceries. The full project is a ruby on rails api consumed by a react frontend.
+[Pantry](https://pantry.svrourke.com) is an app I created to solve a problem for myself, with grocery lists spread out between my phone, my partner's phone and several texts throughout the week I invariably missed items or got redundant items when I went to the store. Pantry allows users to create shared grocery lists with as many members as they need with features that help when shopping like: marking items as acquired and filtering them from the list display.   
+   
+This repo is the backend api created using [ruby on rails](https://rubyonrails.org/).
 
 <br>
 
@@ -7,7 +9,7 @@ Pantry [(live)](https://pantry.svrourke.com) is a collaborative grocery list app
 ## Getting Started
 ---
 
-> If you would like to spin up your own copy of pantry clone this repo and the [frontend repo](https://github.com) and follow the instructions below for the backend setup, and the instructions on the front end repo for the front end setup.
+> If you would like to spin up your own copy of pantry clone this repo and the [frontend repo](https://github.com/SVRourke/pantry_frontend) and follow the instructions below for the backend setup, and the instructions on the frontend repo for the front end setup.
 
 Clone the repository and run bundle install to install the necessary gems
 ```
